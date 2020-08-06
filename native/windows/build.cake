@@ -21,9 +21,11 @@ Task("libSkiaSharp")
         if (Skip(arch)) return;
 
         var clang = string.IsNullOrEmpty(LLVM_HOME.FullPath) ? "" : $"clang_win='{LLVM_HOME}' ";
+        var official = CONFIGURATION.Equals("debug", StringComparison.OrdinalIgnoreCase) ? "false" : "true";
 
         GnNinja($"{VARIANT}/{arch}", "SkiaSharp",
-            $"is_official_build=true skia_enable_tools=false " +
+            $"is_official_build={official} " +
+            $"skia_enable_tools=false " +
             $"target_os='win' target_cpu='{skiaArch}' " +
             clang +
             $"skia_use_icu=false skia_use_sfntly=false skia_use_piex=true skia_use_dng_sdk=true " +
