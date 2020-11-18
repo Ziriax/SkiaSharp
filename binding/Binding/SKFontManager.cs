@@ -5,6 +5,11 @@ using System.Linq;
 
 namespace SkiaSharp
 {
+	public static class SKCustomFontManager
+	{
+		public static void Enable () => SkiaApi.sk_use_custom_font_manager ();
+	}
+
 	public unsafe class SKFontManager : SKObject, ISKReferenceCounted
 	{
 		private static readonly SKFontManager defaultManager;

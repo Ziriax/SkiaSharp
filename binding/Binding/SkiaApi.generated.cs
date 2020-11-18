@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Runtime.InteropServices;
 
 namespace SkiaSharp
@@ -3368,6 +3368,10 @@ namespace SkiaSharp
 		#endregion
 
 		#region sk_typeface.h
+
+		// sk_typeface_t* sk_typeface_create_from_stream(sk_stream_asset_t* stream, int index)
+		[DllImport (SKIA, CallingConvention = CallingConvention.Cdecl)]
+		internal static extern void sk_use_custom_font_manager();
 
 		// int sk_fontmgr_count_families(sk_fontmgr_t*)
 		[DllImport (SKIA, CallingConvention = CallingConvention.Cdecl)]

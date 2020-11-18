@@ -21,16 +21,17 @@ Task("libSkiaSharp")
         if (Skip(arch)) return;
 
         var clang = string.IsNullOrEmpty(LLVM_HOME.FullPath) ? "" : $"clang_win='{LLVM_HOME}' ";
-        var official = CONFIGURATION.Equals("debug", StringComparison.OrdinalIgnoreCase) ? "false" : "true";
-
+        var debug = CONFIGURATION.Equals("debug", StringComparison.OrdinalIgnoreCase);
+        
         GnNinja($"{VARIANT}/{arch}", "SkiaSharp",
-            $"is_official_build={official} " +
+            $"is_official_build={(debug ? "false" : "true")} " +
             $"skia_enable_tools=false " +
             $"target_os='win' target_cpu='{skiaArch}' " +
             clang +
+            $"skia_use_freetype=true skia_use_system_freetype2=false " +
             $"skia_use_icu=false skia_use_sfntly=false skia_use_piex=true skia_use_dng_sdk=true " +
             $"skia_use_system_expat=false skia_use_system_libjpeg_turbo=false skia_use_system_libpng=false skia_use_system_libwebp=false skia_use_system_zlib=false " +
-            $"extra_cflags=[ '-DSKIA_C_DLL', '/MT', '/EHsc', '/Z7' ] " +
+            $"extra_cflags=[ '-DSK_TRACE_PIXELREF_LIFETIME', '-DSKIA_C_DLL', '/MT{(debug ? "" : "d")}', '/EHsc', '/Z7' ] " +
             $"extra_ldflags=[ '/DEBUG:FULL' ] " +
             ADDITIONAL_GN_ARGS);
 
